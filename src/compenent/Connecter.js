@@ -1,40 +1,53 @@
-import {React, useState} from 'react'
-import '../style/Connecter.css'
+import React from 'react'
+import { useState } from 'react'; // Importation des hooks useState
+import { useForm } from "react-hook-form"; // Importation du hook useForm
+import axios from 'axios'; // Importation de la librairie axios pour effectuer des requêtes HTTP
+import '../style/Formulaire.css'; // Importation du fichier CSS
+import { useNavigate } from "react-router-dom"; // Importation de la fonction useNavigate pour naviguer entre les pages de l'application
 
+export default function Connexion() {
+    const { register, handleSubmit, formState: { errors } } = useForm(); // Déclaration du hook useForm pour gérer le formulaire
+    let navigate = useNavigate(); // Initialisation de la fonction useNavigate
 
-function valider(e){
-  e.preventDefault()
-  /* en js la fonction preventDefault permet d'indiquer à l'utilisateur
-  que si l'événement n'est pas géré explicitement,
-  l'action par défaut ne devrait pas être executé comme elle l'est normalement */
-}
+    const [mail, setMail] = useState("") // Initialisation de l'état mail à une chaîne vide
+    const [mdp, setMdp] = useState("") // Initialisation de l'état mdp à une chaîne vide
 
-function FormBlog()
-{ 
-  const [Input_Mail, setInputMdp] = useState('')
-  let inputErrorMail = Input_Mail.includes("")
+    // Fonction pour gérer la connexion de l'utilisateur
+    const handleConnexion = async (e) => {
+        e.preventDefault()
+        console.log(e)
+        await axios.post(`http://localhost:8000/connexion`, { // Envoi d'une requête PUT à l'API
+            mail: mail, // Ajout de l'adresse mail de l'utilisateur dans le corps de la requête
+            mdp: mdp // Ajout du mot de passe de l'utilisateur dans le corps de la requête
+        })
+            .then(res => {
+                console.log(res)
+                if (res.status === 200) { // Si la réponse de l'API est un code de statut 200, la connexion est réussie
+                    alert("Connexion réussie") // Affichage d'une alerte pour informer l'utilisateur que la connexion est réussie
+                    navigate("/"); // Redirection vers la page d'accueil
+                }
+                else { // Sinon, la connexion a échoué
+                    alert("Erreur de connexion") // Affichage d'une alerte pour informer l'utilisateur que la connexion a échoué
+                }
+            })
+    }
 
+    // Rendu du composant
     return (
-      <div className="Contenue">
-          <div className="Connexion">
-              <form name="Connexion" onsubmit="vérif()">
-                  <p><h3>Connectez-vous</h3></p>
-                  <hr/>
-                  <p>E-mail: <input name="mail" type="texte" onChange={(e) => setInputMdp(e.target.value)} placeholder="Mail"/> </p>
-                  <p>Mot de passe: <input name="Mdp" type="passworld" onChange={(e) => setInputMdp(e.target.value)} placeholder="Mdp"/></p> 
-                  
+        <div className='container' style={{ marginTop:'200px'}}>
+            <h2> Connexion </h2>
 
-                  {
-                  Input_Mail != "fofanayassine@gmail.com" ?
-                  <div>
-                    Votre mail n'est pas enregistre
-                  </div> : 
-                   <p2><input name="ConexionBtn" type="submit" value="Connexion" onsubmit={valider}/></p2> 
-                  }
-              </form>
-          </div>
+            <form className='form' onSubmit={handleConnexion}>
+                <label>Adresse email </label>
+                <input {...register("mail", { required: true })} onChange={(e) => setMail(e.target.value)} />
 
-      </div>
+                <label>Mot de passe </label>
+                <input type="password" {...register("mdp", { required: true })} onChange={(e) => setMdp(e.target.value)} />
+
+                {(errors.mail || errors.mdp) ? <span>Tous les champs doivent être remplis</span> : ""}
+
+                <input type="submit" />
+            </form>
+        </div>
     )
-  }
-export default FormBlog
+}

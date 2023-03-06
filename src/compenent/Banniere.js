@@ -19,6 +19,9 @@ export default function Banniere() {
                 <ul className="navbar-header4">
                     <Link to="/connect"> Se connecter </Link>
                 </ul>
+                <ul className="navbar-header5">
+                    <Link to="/ConAdmin"> Admin </Link>
+                </ul>
         </nav>
     </div>
   )
