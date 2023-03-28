@@ -29,6 +29,7 @@ function App() {
 
       {/* On utilise le composant Routes pour gérer les différentes routes de l'application */}
       <Routes>
+        
         {/* On définit la route pour la page d'inscription */}
         <Route path="/inscr" element={<Inscrire />} />
         {/* On définit la route pour la page de connexion */}
