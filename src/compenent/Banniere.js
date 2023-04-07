@@ -8,20 +8,18 @@ export default function Banniere() {
     <div className="header">
         <nav className="navbar">    
                  <ul className="navbar-header-Logo">
-                    <Link to="/"> <img src={Logo} width="150px" height='100px'></img> </Link>
+                <Link to="/produits"> <img src={Logo} width="150px" height='100px'></img> </Link>
                 </ul>
                 <ul className="navbar-header">
-                    <Link to="/"> Accueil </Link>
+                    <Link to="/produits"> Accueil </Link>
                 </ul>
                 <ul className="navbar-header3">
                     <Link to="/inscr"> Inscription </Link>
                 </ul>
                 <ul className="navbar-header4">
-                    <Link to="/connect"> Se connecter </Link>
+                    <Link to="/"> Se connecter </Link>
                 </ul>
-                <ul className="navbar-header5">
-                    <Link to="/ConAdmin"> Admin </Link>
-                </ul>
+
         </nav>
     </div>
   )
