@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import '../style/Produits.css';
 
@@ -8,7 +8,11 @@ export default function Quiz() {
   const [quiz, setQuiz] = useState([]);
   const [affichage, setAffichage] = useState(false);
   const [panier, setPanier] = useState([]);
-  const [total, setTotal] = useState(0); // Ajout d'un état pour le total initialisé à 0
+  const [Valider, setValider] = useState([]);
+  const [Valider2, setValider2] = useState([]);
+  const [total, setTotal] = useState(0); 
+  let { id } = useParams();
+
 
   const recup = async () => {
     await axios
@@ -19,13 +23,34 @@ export default function Quiz() {
         setAffichage(true);
       });
   };
-
   useEffect(() => {
     recup();
   }, []);
 
+  const ValiderPannier = async () => {
+    await axios
+      .put(`http://localhost:8000/Pannier/` + id)
+      .then((res) => {
+        console.log(res);
+        setValider(res.data);
+        setValider2(true);
+        console.log(Valider);
+      });
+  };
+  useEffect(() => {
+    ValiderPannier();
+  }, []);
+
   const ajouterAuPanier = (produit) => {
     setPanier([...panier, produit]);
+    console.log(panier);
+  };
+
+  const retirerDuPanier = (index) => {
+    const nouveauPanier = [...panier];
+    nouveauPanier.splice(index);
+    console.log(index);
+    setPanier(nouveauPanier);
   };
 
   const calculerTotal = () => {
@@ -39,6 +64,7 @@ export default function Quiz() {
   useEffect(() => {
     calculerTotal();
   }, [panier]);
+  
   
 
   return (
@@ -57,6 +83,7 @@ export default function Quiz() {
                   width="200px"
                 />
                 <input type="button" value="+" onClick={() => ajouterAuPanier(produit)}></input>
+                
               </div>
             </div>
           ))
@@ -70,10 +97,14 @@ export default function Quiz() {
           {panier.map((produit, index) => (
             <li key={index}>
               {produit.Articles} {produit.Prix}
+              <button onClick={() => retirerDuPanier(index)}><FaTrash /></button>
             </li>
           ))}
         </ul>
-        <p>Total : {total} €</p> {/* Affichage du total */}
+        <p>Total : {total} €</p>
+        <div className='Valider'>
+        <button value='valider'>Valider</button>
+        </div>
       </div>
     </div>
   );

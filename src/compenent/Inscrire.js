@@ -1,35 +1,49 @@
 import React from 'react'
 import { useState } from 'react';
-import { useForm } from "react-hook-form"; // importation de useForm pour gérer les formulaires
-import axios from 'axios'; // importation d'axios pour effectuer des appels HTTP
-import { useNavigate } from "react-router-dom"; // importation de useNavigate pour la navigation
-
+import { useForm } from "react-hook-form"; 
+import axios from 'axios'; 
+import { useNavigate } from "react-router-dom"; 
+import '../style/inscrire.css'
+import { Link } from 'react-router-dom';
+import Logo from  '../asset/Logo.png'
 export default function AjoutQuestion() {
-    const { register, handleSubmit, formState: { errors } } = useForm(); // Initialisation des hooks useForm pour le formulaire
-    let navigate = useNavigate(); // Initialisation de useNavigate pour la navigation
+    const { register, handleSubmit, formState: { errors } } = useForm(); 
+    let navigate = useNavigate(); 
 
-    const [mail, setmail] = useState("") // Initialisation de l'état mail à une chaîne vide
-    const [mdp, setMdp] = useState("") // Initialisation de l'état mdp à une chaîne vide
+    const [mail, setmail] = useState("") 
+    const [mdp, setMdp] = useState("")
 
-    const ajoutQuestion = async () => { // Fonction ajoutQuestion qui sera appelée lors de la soumission du formulaire
-        await axios.post(`http://localhost:8000/inscr`, { // Appel HTTP POST pour l'inscription
-            mail: mail, // Envoi de l'email
-            mdp: mdp // Envoi du mot de passe
+    const ajoutQuestion = async () => { 
+        await axios.post(`http://localhost:8000/inscr`, { 
+            mail: mail, 
+            mdp: mdp 
         })
-            .then(res => { // Si la requête est réussie
+            .then(res => { 
                 console.log(res)
-                if (res.status === 200) { // Si le code de statut HTTP est 200 (OK)
-                    alert("Ajout réussi") // Affichage d'une alerte avec le message "Ajout réussi"
-                    navigate("/"); // Navigation vers la page d'accueil
+                if (res.status === 200) {
+                    alert("Inscription  reussi !") 
+                    navigate("/produits"); 
                 }
-                else { // Sinon
-                    alert("Erreur d'ajout") // Affichage d'une alerte avec le message "Erreur d'ajout"
+                else {
+                    alert("Erreur d'ajout") 
                 }
             })
     }
 
     return (
         <div className='container' style={{ marginTop:'200px'}}>
+        <nav className="navbar">    
+                 <ul className="navbar-header-Logo">
+                <Link to="/"> <img src={Logo} width="150px" height='100px'></img> </Link>
+                </ul>
+                <ul className="navbar-header3">
+                    <Link to="/inscr"> Inscription </Link>
+                </ul>
+                <ul className="navbar-header4">
+                    <Link to="/"> Se connecter </Link>
+                </ul>
+
+        </nav>
             <h2> Inscrivez-vous </h2>
             <form onSubmit={handleSubmit(ajoutQuestion)} > 
                 <label>E_mail </label>

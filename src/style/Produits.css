@@ -32,3 +32,39 @@
     background-color: #007bff;
     color: white;
   }  
+
+  /* Styles pour le panier */
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Styles pour le total */
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  font-weight: bold;
+}
+
+.total span {
+  font-size: 1.2rem;
+}

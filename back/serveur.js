@@ -94,17 +94,20 @@ app.post('/inscr', async (req, res, hashedPassword) => {
 app.post('/connexion', async (req, res) => {  
   const id = parseInt(req.params.id);
   const { mail, mdp } = req.body;
-  let conn; 
+  let conn;  
   try {
     console.log("Lancement de la connexion");
     conn = await pool.getConnection();
     console.log("Lancement de la requête");
     // Interroger la base de données pour récupérer l'utilisateur
-    const rows = await conn.query('SELECT * FROM ap2 WHERE mail = ? AND mdp = ?', [mail, mdp]);
-    console.log(rows);
+    const rows = await conn.query('SELECT * FROM ap2 WHERE mail = ?', [mail]);
+    console.log("connexion",rows[0].mdp);
     // Si un utilisateur est trouvé, le renvoyer, sinon renvoyer une erreur d'authentification
+    const match = await bcrypt.compare(mdp, rows[0].mdp)
+    console.log(match);
+
     if (rows.length === 1) {
-      res.status(200).json({message: "Connexion reussi !!"});
+      res.status(200).json({id:rows[0].id, mail:rows[0].mail, role:rows[0].role});
     } else {
       console.log("pas correct")
       res.status(401).json({ message: "Nom d'utilisateur ou mot de passe incorrect." });
@@ -127,7 +130,7 @@ app.post('/Ajt', async(req,res) => {
       conn = await pool.getConnection();
       console.log("lancement de la requete")
       // Insérer un nouveau produit dans la base de données
-      const rows = await conn.query ('INSERT INTO produit (Articles, Image, Prix) VALUES (?, ?, ?)', [req.body.Articles, req.body.Image, req.body.Prix]);
+      const rows = await conn.query ('INSERT INTO produit (Articles, Image, Prix, Quantite) VALUES (?, ?, ?, ?)', [req.body.Articles, req.body.Image, req.body.Prix, req.body.Quantite]);
       console.log(rows);
       res.status(200).json(rows.affectedRows)
   }
@@ -152,6 +155,24 @@ try{
 catch(err){
     console.log(err)
 }
+})
+
+app.put('/Pannier/:id', async(req,res) => {       
+  let conn; 
+  const id = parseInt(req.params.id)   
+  try{
+      console.log("lancement de la connexion")
+       
+      conn = await pool.getConnection();
+      console.log("lancement de la requete")
+      // Insérer un nouveau produit dans la base de données
+      const rows = await conn.query ('UPDATE produit set Quantite = Quantite - ? WHERE Id = ?', [req.body.index, id]);
+      console.log(rows);
+      res.status(200).json(rows.affectedRows)
+  }
+  catch(err){
+      console.log(err)
+  }
 })
 
 // Démarrer le serveur sur le port 8000

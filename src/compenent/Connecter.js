@@ -1,40 +1,70 @@
 import React from 'react'
-import { useState } from 'react'; // Importation des hooks useState
-import { useForm } from "react-hook-form"; // Importation du hook useForm
-import axios from 'axios'; // Importation de la librairie axios pour effectuer des requêtes HTTP
-import '../style/Formulaire.css'; // Importation du fichier CSS
-import { useNavigate } from "react-router-dom"; // Importation de la fonction useNavigate pour naviguer entre les pages de l'application
+import { useState } from 'react'; 
+import { useForm } from "react-hook-form";
+import axios from 'axios'; 
+import '../style/Connecter.css';
+import { Link } from 'react-router-dom';
+import Logo from  '../asset/Logo.png'
+import { useNavigate } from "react-router-dom"; 
 
 export default function Connexion() {
-    const { register, handleSubmit, formState: { errors } } = useForm(); // Déclaration du hook useForm pour gérer le formulaire
-    let navigate = useNavigate(); // Initialisation de la fonction useNavigate
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    let navigate = useNavigate(); 
 
-    const [mail, setMail] = useState("") // Initialisation de l'état mail à une chaîne vide
-    const [mdp, setMdp] = useState("") // Initialisation de l'état mdp à une chaîne vide
-
+    const [mail, setMail] = useState("") 
+    const [mdp, setMdp] = useState("")
+    const [role, setRole] = useState("")
+    const ls = localStorage; 
+    ls.clear();
     // Fonction pour gérer la connexion de l'utilisateur
     const handleConnexion = async (e) => {
         e.preventDefault()
         console.log(e)
-        await axios.post(`http://localhost:8000/connexion`, { // Envoi d'une requête PUT à l'API
-            mail: mail, // Ajout de l'adresse mail de l'utilisateur dans le corps de la requête
-            mdp: mdp // Ajout du mot de passe de l'utilisateur dans le corps de la requête
+        await axios.post(`http://localhost:8000/connexion`, { 
+            mail: mail, 
+            mdp: mdp, 
+            role: role
         })
             .then(res => {
                 console.log(res)
-                if (res.status === 200) { // Si la réponse de l'API est un code de statut 200, la connexion est réussie
-                    alert("Connexion réussie") // Affichage d'une alerte pour informer l'utilisateur que la connexion est réussie
-                    navigate("/"); // Redirection vers la page d'accueil
+                if (res.status === 200) { 
+                    alert("Connexion réussie") 
+                    
+                    ls.setItem ("mail", res.data.mail);
+                    ls.setItem ("role", res.data.role);
+                    console.log(res.data)
+
+                    if (res.data.role === 1 ){
+                        navigate("/Admin"); 
+                    }
+
+                    if (res.data.role === 0){
+                        navigate("/produits"); 
+                    }
                 }
                 else { // Sinon, la connexion a échoué
-                    alert("Erreur de connexion") // Affichage d'une alerte pour informer l'utilisateur que la connexion a échoué
+                    alert("Erreur de connexion") 
                 }
             })
+
+
     }
 
-    // Rendu du composant
     return (
         <div className='container' style={{ marginTop:'200px'}}>
+
+        <nav className="navbar">    
+                 <ul className="navbar-header-Logo">
+                <Link to="/"> <img src={Logo} width="150px" height='100px'></img> </Link>
+                </ul>
+                <ul className="navbar-header3">
+                    <Link to="/inscr"> Inscription </Link>
+                </ul>
+                <ul className="navbar-header4">
+                    <Link to="/"> Se connecter </Link>
+                </ul>
+
+        </nav>
             <h2> Connexion </h2>
 
             <form className='form' onSubmit={handleConnexion}>
@@ -48,6 +78,7 @@ export default function Connexion() {
 
                 <input type="submit" />
             </form>
+
         </div>
     )
 }

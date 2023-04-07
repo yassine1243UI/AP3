@@ -6,33 +6,31 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
-// Créer et exporter le composant AjoutArticles
 export default function AjoutArticles() {
-// Initialiser useForm pour la validation de formulaire
+// useForm validation de formulaire
 const { register, handleSubmit, formState: { errors } } = useForm();
-// Initialiser useNavigate pour la navigation de page
 let navigate = useNavigate();
 
-// Initialiser les états Articles, Image et Prix pour stocker les données entrées dans les champs de saisie
+// stocker les données entrées dans les champs de saisie
 const [Articles, setArticles] = useState("")
 const [Image, setImage] = useState("")
 const [Prix, setPrix] = useState("")
+const [Quantite, setQuantite] = useState("")
 
 // Créer une fonction pour envoyer une requête de post au serveur et ajouter un nouvel article
 const AjoutArticles = async () => {
-    // Envoyer une requête post à l'API avec les données des champs de saisie
+
     await axios.post(`http://localhost:8000/Ajt`, {
         Articles: Articles,
         Image: Image,
-        Prix: Prix
+        Prix: Prix,
+        Quantite: Quantite
     })
         .then(res => {
             console.log(res)
-            // Vérifier si la requête a réussi ou non
             if (res.status === 200) {
                 alert("Ajout réussi")
-                // Naviguer vers la page d'accueil après l'ajout réussi
-                navigate("/");
+                navigate("/produits");
             }
             else {
                 alert("Erreur d'ajout")
@@ -42,7 +40,6 @@ const AjoutArticles = async () => {
 
 
 return (
-    // Afficher le formulaire d'ajout d'article
     <div className='container' style={{ marginTop:'200px'}}>
         <h2> Ajouter un article</h2>
 
@@ -56,8 +53,11 @@ return (
             <label>Prix </label>
             <input {...register("Prix", { required: true })} onChange={(e) => setPrix(e.target.value)} />
 
+            <label>Quantité </label>
+            <input {...register("Quantite", { required: true })} onChange={(e) => setQuantite(e.target.value)} />
+
            
-            {(errors.Articles || errors.Image || errors.Prix) ? <span>Tous les champs doivent être remplis</span> : ""}
+            {(errors.Articles || errors.Image || errors.Prix || errors.Quantite) ? <span>Tous les champs doivent être remplis</span> : ""}
 
             <input type="submit" />
             

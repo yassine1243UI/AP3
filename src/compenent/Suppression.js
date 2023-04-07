@@ -5,11 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function SuppressionQuestion() {
-    // Récupération du hook useForm() qui permet de gérer le formulaire
     const { handleSubmit } = useForm();
-    // Récupération du paramètre d'URL "id"
     let { id } = useParams();
-    // Récupération du hook useNavigate() pour naviguer entre les pages
     let navigate = useNavigate();
 
     // Fonction pour supprimer la question en envoyant une requête DELETE au backend
@@ -19,7 +16,7 @@ export default function SuppressionQuestion() {
                 console.log(res);
                 if (res.status === 200) {
                     alert("Suppression réussie");
-                    navigate("/");
+                    navigate("/produits");
                 }
                 else {
                     alert("Erreur de suppression");
