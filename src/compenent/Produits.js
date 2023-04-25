@@ -12,13 +12,15 @@ export default function Quiz() {
   const [Valider2, setValider2] = useState([]);
   const [total, setTotal] = useState(0); 
   let { id } = useParams();
+  const ls = localStorage; 
+
 
 
   const recup = async () => {
     await axios
       .get(`http://localhost:8000/produit`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         setQuiz(res.data);
         setAffichage(true);
       });
@@ -82,7 +84,7 @@ export default function Quiz() {
                   src={`${process.env.PUBLIC_URL}/images/${produit.Image}`}
                   width="200px"
                 />
-                <input type="button" value="+" onClick={() => ajouterAuPanier(produit)}></input>
+                <input type="button" value="+" onClick={() => ajouterAuPanier(produit) }></input>
                 
               </div>
             </div>
@@ -94,10 +96,11 @@ export default function Quiz() {
       <div>
         <h3>Panier</h3>
         <ul>
+         
           {panier.map((produit, index) => (
             <li key={index}>
               {produit.Articles} {produit.Prix}
-              <button onClick={() => retirerDuPanier(index)}><FaTrash /></button>
+              <button onClick={() => retirerDuPanier(produit)}><FaTrash /></button>
             </li>
           ))}
         </ul>

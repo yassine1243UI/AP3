@@ -31,7 +31,9 @@
   .box-title {
     background-color: #007bff;
     color: white;
+    margin: 10px;
   }  
+  
 
   /* Styles pour le panier */
 
@@ -67,4 +69,8 @@ li:last-child {
 
 .total span {
   font-size: 1.2rem;
+}
+
+.button p{
+  margin-top: 10%;
 }

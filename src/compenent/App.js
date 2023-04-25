@@ -7,6 +7,8 @@ import Connecter from './Connecter';
 import Admin from './Admin';
 import Supprimer from './Supprimer';
 import Sup from './Suppression';
+import Modifier from './Modifier';
+import Modification from './Modification'
 import Footer from './Footer';
 import { Route, Routes, Link } from "react-router-dom";
 import React, { useState } from 'react';
@@ -21,6 +23,8 @@ function App() {
         <Route path='/Admin' element={<Admin/>}/>
         <Route path='/Sup' element={<Supprimer/>}/>
         <Route path='/Del/:id' element={<Sup/>}/>
+        <Route path='/Modifier' element={<Modifier/>}/>
+        <Route path='/Modification/:id' element={<Modification/>}/>
         <Route path="/produits" element={<Produits />} />
       </Routes>
 

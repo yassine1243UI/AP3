@@ -13,12 +13,10 @@ export default function Banniere() {
                 <ul className="navbar-header">
                     <Link to="/produits"> Accueil </Link>
                 </ul>
-                <ul className="navbar-header3">
-                    <Link to="/inscr"> Inscription </Link>
-                </ul>
                 <ul className="navbar-header4">
-                    <Link to="/"> Se connecter </Link>
+                    <Link to="/"> Se Déconnecter </Link>
                 </ul>
+                
 
         </nav>
     </div>

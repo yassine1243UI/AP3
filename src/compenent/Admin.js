@@ -61,7 +61,9 @@ return (
 
             <input type="submit" />
             
-            <Link to="/Sup"><input type='button' value='Supprimer un article'/></Link>
+            <p><Link to="/Sup"><input type='button' value='Supprimer un article'/></Link>
+
+            <Link to="/Modifier"><input type='button' value='Modifier un article'/></Link></p>
         </form>
     </div>
 )

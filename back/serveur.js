@@ -63,29 +63,20 @@ app.get('/produit', async(req,res) => {
 app.post('/inscr', async (req, res, hashedPassword) => {
   let conn;
   try {
-      // On affiche un message de connexion
       console.log("lancement de la connexion")
-      // On récupère une connexion à la base de données
       conn = await pool.getConnection();
-      // On affiche un message de requête
       console.log("lancement de la requete insert")
-      // On affiche le contenu de la requête POST
       console.log(req.body);
-      // On exécute une requête INSERT pour insérer une nouvelle ligne dans la table 'ap2'
       const bcrypt = require('bcrypt');
       const saltRounds = 10;
       const plainPassword = req.body.mdp;
       hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
       let requete = 'INSERT INTO ap2 (mail, mdp) VALUES (?, ?);'
       let rows = await conn.query(requete, [req.body.mail, hashedPassword]);
-
-      // On affiche le nombre de lignes affectées
       console.log(rows);
-      // On renvoie le nombre de lignes affectées au format JSON
       res.status(200).json(rows.affectedRows)
   }
   catch (err) {
-      // On affiche les erreurs s'il y en a une
       console.log(err);
   }
 })
@@ -122,7 +113,6 @@ app.post('/connexion', async (req, res) => {
   }
 });
 
-// Endpoint pour ajouter un nouveau produit
 app.post('/Ajt', async(req,res) => {       
   let conn; 
   try{
@@ -130,7 +120,8 @@ app.post('/Ajt', async(req,res) => {
       conn = await pool.getConnection();
       console.log("lancement de la requete")
       // Insérer un nouveau produit dans la base de données
-      const rows = await conn.query ('INSERT INTO produit (Articles, Image, Prix, Quantite) VALUES (?, ?, ?, ?)', [req.body.Articles, req.body.Image, req.body.Prix, req.body.Quantite]);
+      const rows = await conn.query ('INSERT INTO produit (Articles, Image, Prix, Quantite) VALUES (?, ?, ?, ?)', 
+      [req.body.Articles, req.body.Image, req.body.Prix, req.body.Quantite]);
       console.log(rows);
       res.status(200).json(rows.affectedRows)
   }
@@ -174,6 +165,25 @@ app.put('/Pannier/:id', async(req,res) => {
       console.log(err)
   }
 })
+
+app.put('/modification/:id', async (req, res) => {
+
+    const id = parseInt(req.params.id)  
+    let conn;  
+    try {
+      console.log("lancement de la connexion")  
+      conn = await pool.getConnection();  
+      console.log("lancement de la requete update")  
+      let requete = 'UPDATE produit SET Articles = ?, Image = ?, Prix = ?, Quantite = ? WHERE id = ?;'  
+      let rows = await conn.query(requete, [req.body.Articles, req.body.Image, req.body.Prix, req.body.Quantite, id]);  
+      console.log(rows);  
+      res.status(200).json(rows.affectedRows)  
+    }  
+    catch (err) {  
+      console.log(err);  
+    }
+  
+  })
 
 // Démarrer le serveur sur le port 8000
 app.listen(8000, ()=>{ 
