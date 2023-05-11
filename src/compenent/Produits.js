@@ -29,19 +29,19 @@ export default function Quiz() {
     recup();
   }, []);
 
-  const ValiderPannier = async () => {
-    await axios
-      .put(`http://localhost:8000/Pannier/` + id)
-      .then((res) => {
-        console.log(res);
-        setValider(res.data);
-        setValider2(true);
-        console.log(Valider);
-      });
-  };
-  useEffect(() => {
-    ValiderPannier();
-  }, []);
+  // const ValiderPannier = async () => {
+  //   await axios
+  //     .put(`http://localhost:8000/Pannier/` + id)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setValider(res.data);
+  //       setValider2(true);
+  //       console.log(Valider);
+  //     });
+  // };
+  // useEffect(() => {
+  //   ValiderPannier();
+  // }, []);
 
   const ajouterAuPanier = (produit) => {
     setPanier([...panier, produit]);
@@ -100,7 +100,7 @@ export default function Quiz() {
           {panier.map((produit, index) => (
             <li key={index}>
               {produit.Articles} {produit.Prix}
-              <button onClick={() => retirerDuPanier(produit)}><FaTrash /></button>
+              <button onClick={() => retirerDuPanier(index)}><FaTrash /></button>
             </li>
           ))}
         </ul>

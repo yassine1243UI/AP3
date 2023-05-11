@@ -1,33 +1,25 @@
-const bcrypt = require('bcrypt'); // ca va nous permettre de rendre notre base de donner plus sécuriser
-
-const express = require('express')//la récupération d'express
-
-const app = express() // création d'une instance d'express
-
-require('dotenv').config() // configuration des variables d'environnement stockées dans un fichier .env
-
-let cors = require('cors') // utilisation de la bibliothèque cors pour gérer les requêtes cross-origin (CORS)
-
-const mariadb = require('mariadb'); // récupération du module mariadb pour se connecter à la base de données
-
-app.use(express.json()) // utilisation du middleware express pour parser les données en JSON
-
-app.use(cors()) // activation de la gestion CORS pour toutes les routes
-
+const bcrypt = require('bcrypt'); 
+const express = require('express')
+const app = express()
+require('dotenv').config()
+let cors = require('cors')
+const mariadb = require('mariadb');
+app.use(express.json())
+app.use(cors())
 const pool = mariadb.createPool ({
-    host: process.env.DB_HOST, // récupération de l'adresse de l'hôte de la base de données depuis les variables d'environnement
-    user: process.env.DB_USER, // récupération de l'utilisateur de la base de données depuis les variables d'environnement
-    password: process.env.DB_PWD, // récupération du mot de passe de la base de données depuis les variables d'environnement
-    database: process.env.DB_DTB // récupération du nom de la base de données depuis les variables d'environnement
+    host: process.env.DB_HOST, 
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+    database: process.env.DB_DTB
 });
 
-app.get('/Bdd', async(req,res) => { // définition d'une route pour récupérer les données de la base de données
+app.get('/Bdd', async(req,res) => { 
     let conn; 
     try{
-        console.log("lancement de la connexion") // affichage d'un message dans la console pour indiquer le début de la connexion
-        conn = await pool.getConnection(); // établissement de la connexion avec la base de données
-        console.log("lancement de la requete") // affichage d'un message dans la console pour indiquer le début de la requête
-        const rows = await conn.query('SELECT * FROM ap2'); // exécution d'une requête pour récupérer toutes les données de la table ap2
+        console.log("lancement de la connexion") 
+        conn = await pool.getConnection(); 
+        console.log("lancement de la requete") 
+        const rows = await conn.query('SELECT * FROM ap2'); 
         console.log(rows); // affichage des données récupérées dans la console
         res.status(200).json(rows) // envoi des données récupérées au client sous forme de JSON
     }
@@ -48,6 +40,29 @@ app.get('/produit', async(req,res) => {
       console.log("lancement de la requete")
       // On exécute une requête SELECT pour récupérer tous les produits de la table 'produit'
       const rows = await conn.query('SELECT * FROM produit');
+      // On affiche le résultat de la requête
+      console.log(rows);
+      // On renvoie les résultats au format JSON
+      res.status(200).json(rows)
+  }
+  catch(err){
+      // On affiche les erreurs s'il y en a une
+      console.log(err)
+  }
+})
+
+app.get('/produit/:id', async(req,res) => {
+  let conn; 
+  const id = parseInt(req.params.id);
+
+  try{
+      // On affiche un message de connexion
+      console.log("lancement de la connexion")
+      // On récupère une connexion à la base de données
+      conn = await pool.getConnection();
+      // On affiche un message de requête
+      console.log("lancement de la requete")
+      const rows = await conn.query('SELECT * FROM produit WHERE id = ?', [id]);
       // On affiche le résultat de la requête
       console.log(rows);
       // On renvoie les résultats au format JSON
