@@ -10,7 +10,7 @@ export default function ModifierArticles() {
     let { id } = useParams();
     let navigate = useNavigate();
 
-    // Fonction pour supprimer la question en envoyant une requête DELETE au backend
+   
     const ModifierArticles = async () => {
         await axios.put(`http://localhost:8000/modification/` + id)
             .then(res => {
@@ -32,69 +32,52 @@ export default function ModifierArticles() {
             });
     }
 
-    const [Articles, setArticles] = useState("")
+  const [Articles, setArticles] = useState("")
 
   const [Image, setImage] = useState("")
 
   const [Prix, setPrix] = useState("")
 
-    const [Quantite, setQuantite] = useState("")
+  const [Quantite, setQuantite] = useState("")
     
 
     
-      const editQuestion = async () => {
+  const editUser = async () => {
 
-            await axios.put(`http://localhost:8000/modification/` + id, {
-        
-              Articles: Articles,
-        
-              Image: Image,
-        
-              Prix: Prix,
-                    
-                    Quantite: Quantite
+    await axios.put(`http://localhost:8000/modification/` + id, {
 
-        
-            })
+      Articles: Articles,        
+      Image: Image,        
+      Prix: Prix,                    
+      Quantite: Quantite        
+    })
 
-              .then(res => {
-
-                    console.log(res)
-            
-                    if (res.status === 200) {
-            
-                      alert("Modification réussi")
-            
-                      navigate("/produits");
-            
-                    }
-            
-                    else {
-            
-                      alert("Erreur d'envoi")
-            
-                    }
-            
-                  })
-            
-              }
+  .then(res => {
+        console.log(res)            
+        if (res.status === 200) {            
+          alert("Modification réussi")            
+          navigate("/produits");            
+        }            
+        else {
+          alert("Erreur d'envoi")            
+        }            
+    })            
+  }
             
              
             
-              useEffect(() => {
-            
-                    ModifierArticles()
-            
-              }, [])
+  useEffect(() => {
+
+        ModifierArticles()
+
+  }, [])
 
     return (
         <div className='container'>
 
-              <h2> Modifier votre article</h2>        
-        
-        
-        
-              <form onSubmit={handleSubmit(editQuestion)}>        
+              <h2> Modifier votre article</h2>    
+              
+              <form onSubmit={handleSubmit(editUser)}>        
                 <label>Articles </label>        
                 <input defaultValue={Articles} onChange={(e) => setArticles(e.target.value)} />           
                 <label>Image </label>

@@ -16,7 +16,7 @@ export default function Connexion() {
     const [role, setRole] = useState("")
     const ls = localStorage; 
     ls.clear();
-    // Fonction pour gérer la connexion de l'utilisateur
+
     const handleConnexion = async (e) => {
         e.preventDefault()
         console.log(e)
@@ -42,7 +42,7 @@ export default function Connexion() {
                         navigate("/produits"); 
                     }
                 }
-                else { // Sinon, la connexion a échoué
+                else {
                     alert("Erreur de connexion") 
                 }
             })

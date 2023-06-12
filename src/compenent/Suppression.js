@@ -8,8 +8,7 @@ export default function SuppressionQuestion() {
     const { handleSubmit } = useForm();
     let { id } = useParams();
     let navigate = useNavigate();
-
-    // Fonction pour supprimer la question en envoyant une requête DELETE au backend
+    
     const suppressionQuestion = async () => {
         await axios.delete(`http://localhost:8000/Del/` + id)
             .then(res => {

@@ -16,6 +16,10 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  body .boutton{
+    margin-top: 50px;
+  }
   
   .cont {
     display: flex;
