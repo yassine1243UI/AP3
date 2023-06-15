@@ -46,7 +46,11 @@ export default function Quiz() {
                 }
                 
                <p style={{ marginTop:'20px'}}> <Link to="/Admin"><input type='button' value='Ajouter un article' style={{ width:'200px'}}/></Link>
-               <Link to="/Modifier"><input type='button' value='Modifier un articles un article'/></Link></p>
+               <Link to="/Modifier"><input type='button' value='Modifier un articles un article'/></Link>
+               <Link to="/AcceuilAdmin">
+                        <input type='button' value="Acceuil Admin"/>
+                    </Link>
+                    </p>
             </div>
         </div>
     )
