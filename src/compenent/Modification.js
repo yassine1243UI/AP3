@@ -24,7 +24,7 @@ export default function ModifierArticles() {
                 setQuantite(res.data[0].Quantite)
                 if (res.status === 200) {
                     alert("Modification réussie");
-                    navigate("/produits");
+                    navigate("/AcceuilAdmin");
                 }
                 else {
                     alert("Erreur de modification");
@@ -56,7 +56,7 @@ export default function ModifierArticles() {
         console.log(res)            
         if (res.status === 200) {            
           alert("Modification réussi")            
-          navigate("/produits");            
+          navigate("/AcceuilAdmin");            
         }            
         else {
           alert("Erreur d'envoi")            
@@ -76,7 +76,7 @@ export default function ModifierArticles() {
         <div className='container'>
 
               <h2> Modifier votre article</h2>    
-              
+
               <form onSubmit={handleSubmit(editUser)}>        
                 <label>Articles </label>        
                 <input defaultValue={Articles} onChange={(e) => setArticles(e.target.value)} />           

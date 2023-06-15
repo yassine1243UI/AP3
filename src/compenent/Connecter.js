@@ -35,7 +35,7 @@ export default function Connexion() {
                     console.log(res.data)
 
                     if (res.data.role === 1 ){
-                        navigate("/Admin"); 
+                        navigate("/AcceuilAdmin"); 
                     }
 
                     if (res.data.role === 0){
