@@ -15,7 +15,7 @@ export default function SuppressionQuestion() {
                 console.log(res);
                 if (res.status === 200) {
                     alert("Suppression réussie");
-                    navigate("/produits");
+                    navigate("/AcceuilAdmin");
                 }
                 else {
                     alert("Erreur de suppression");
