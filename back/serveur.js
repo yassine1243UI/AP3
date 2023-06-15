@@ -45,6 +45,63 @@ app.get('/produit', async(req,res) => {
   }
 })
 
+app.get('/real1', async (req, res) => {
+  let conn; 
+  try {
+    console.log("Lancement de la connexion");
+    conn = await pool.getConnection();
+    console.log("Lancement de la requête");
+    const result = await conn.query('SELECT COUNT(Articles) AS articleCount FROM produit');
+    const articleCount = result[0].articleCount.toString(); // Convertir BigInt en chaîne de caractères
+    console.log(articleCount);
+    res.status(200).json({ articleCount });
+  } catch (err) {
+    console.log(err);
+  } finally {
+    if (conn) {
+      conn.release(); // Libérer la connexion après usage
+    }
+  }
+});
+
+
+app.get('/real2', async(req,res) => {
+  let conn; 
+  try{
+      console.log("lancement de la connexion")
+      conn = await pool.getConnection();
+      console.log("lancement de la requete")
+      console.log("recherche",req.body)
+      // On exécute une requête SELECT pour récupérer tous les produits de la table 'produit'
+      const rows = await conn.query('SELECT * FROM produit WHERE Articles LIKE ?', [req.body.recherche + '%']);
+
+      console.log(rows);
+      res.status(200).json(rows)
+  }
+  catch(err){
+      console.log(err)
+  }
+})
+
+app.get('/real2bis', async(req,res) => {
+  let conn; 
+  try{
+      console.log("lancement de la connexion")
+      conn = await pool.getConnection();
+      console.log("lancement de la requete")
+      // On exécute une requête SELECT pour récupérer tous les produits de la table 'produit'
+      const rows = await conn.query('SELECT * FROM produit WHERE Articles LIKE ?', ['%' + req.body.recherche]);
+
+      console.log(rows);
+      res.status(200).json(rows)
+  }
+  catch(err){
+      console.log(err)
+  }
+})
+
+
+
 
 app.get('/produit/:id', async(req,res) => {
   let conn; 
@@ -206,6 +263,145 @@ app.put('/modification/:id', async (req, res) => {
   
   })
 
+  app.get('/user', async(req,res) => {
+    let conn; 
+    try{
+        // On affiche un message de connexion
+        console.log("lancement de la connexion")
+        // On récupère une connexion à la base de données
+        conn = await pool.getConnection();
+        // On affiche un message de requête
+        console.log("lancement de la requete")
+        // On exécute une requête SELECT pour récupérer tous les produits de la table 'ap2'
+        const rows = await conn.query('SELECT * FROM ap2');
+        // On affiche le résultat de la requête
+        console.log(rows);
+        // On renvoie les résultats au format JSON
+        res.status(200).json(rows)
+    }
+    catch(err){
+        // On affiche les erreurs s'il y en a une
+        console.log(err)
+    }
+  })
+  
+  
+  app.get('/user/:id', async(req,res) => {
+    let conn; 
+    const id = parseInt(req.params.id);
+    try{
+        // On affiche un message de connexion
+        console.log("lancement de la connexion")
+        // On récupère une connexion à la base de données
+        conn = await pool.getConnection();
+        // On affiche un message de requête
+        console.log("lancement de la requete")
+        const rows = await conn.query('SELECT * FROM ap2 WHERE id = ?', [id]);
+        // On affiche le résultat de la requête
+        console.log(rows);
+        // On renvoie les résultats au format JSON
+        res.status(200).json(rows)
+    }
+    catch(err){
+        // On affiche les erreurs s'il y en a une
+        console.log(err)
+    }
+  })
+  
+  
+    app.delete('/UserDel/:id', async(req,res) => {  
+      const id = parseInt(req.params.id)     
+      let conn; 
+      try{
+          console.log("lancement de la connexion")
+          conn = await pool.getConnection();
+          console.log("lancement de la requete")
+          // Supprimer un produit de la base de données en fonction de son ID
+          const rows = await conn.query ('DELETE FROM ap2 WHERE id = ?', [id]);
+          console.log(rows);
+          res.status(200).json(rows.affectedRows)
+      }
+      catch(err){
+          console.log(err)
+      }
+      }) 
+  
+  
+    app.put('/Usermodification/:id', async (req, res) => {
+      const id = parseInt(req.params.id)  
+      let conn;  
+      try {
+        console.log("lancement de la connexion")  
+        conn = await pool.getConnection();  
+        console.log("lancement de la requete update")  
+        let requete = 'UPDATE ap2 SET mail = ?, role = ? WHERE id = ?;'  
+        let rows = await conn.query(requete, [req.body.mail, req.body.role, id]);  
+        console.log(rows);  
+        res.status(200).json(rows.affectedRows)  
+      }  
+      catch (err) {  
+        console.log(err);  
+      }
+    
+    })
+  
+    app.get('/OCPP', async(req,res) => { 
+      let conn; 
+      try{
+          console.log("lancement de la connexion") 
+          conn = await pool.getConnection(); 
+          console.log("lancement de la requete") 
+          const rows = await conn.query('SELECT * FROM produit ORDER BY Articles ASC;'); 
+          console.log(rows);
+          res.status(200).json(rows) 
+      }
+      catch(err){
+          console.log(err) // affichage d'un message d'erreur dans la console en cas de problème lors de l'exécution de la requête
+      }
+    })
+    app.get('/ODPP', async(req,res) => { 
+      let conn; 
+      try{
+          console.log("lancement de la connexion") 
+          conn = await pool.getConnection(); 
+          console.log("lancement de la requete") 
+          const rows = await conn.query('SELECT * FROM produit ORDER BY Articles DESC;'); 
+          console.log(rows); // affichage des données récupérées dans la console
+          res.status(200).json(rows) // envoi des données récupérées au client sous forme de JSON
+      }
+      catch(err){
+          console.log(err) // affichage d'un message d'erreur dans la console en cas de problème lors de l'exécution de la requête
+      }
+    })
+    app.get('/OD', async(req,res) => { 
+      let conn; 
+      try{
+          console.log("lancement de la connexion") 
+          conn = await pool.getConnection(); 
+          console.log("lancement de la requete") 
+          const rows = await conn.query('SELECT * FROM produit ORDER BY Prix DESC;'); 
+          console.log(rows); // affichage des données récupérées dans la console
+          res.status(200).json(rows) // envoi des données récupérées au client sous forme de JSON
+      }
+      catch(err){
+          console.log(err) // affichage d'un message d'erreur dans la console en cas de problème lors de l'exécution de la requête
+      }
+    })
+    app.get('/OC', async(req,res) => { 
+      let conn; 
+      try{
+          console.log("lancement de la connexion") 
+          conn = await pool.getConnection(); 
+          console.log("lancement de la requete") 
+          const rows = await conn.query('SELECT * FROM produit ORDER BY Prix ASC;'); 
+          console.log(rows); // affichage des données récupérées dans la console
+          res.status(200).json(rows) // envoi des données récupérées au client sous forme de JSON
+      }
+      catch(err){
+          console.log(err) // affichage d'un message d'erreur dans la console en cas de problème lors de l'exécution de la requête
+      }
+    })
+    
   
 
 

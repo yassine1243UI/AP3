@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { FaTrash, FaPen } from 'react-icons/fa';
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 import '../style/Produits.css';
 
 export default function Quiz() {
@@ -11,8 +12,11 @@ export default function Quiz() {
   const [affichage, setAffichage] = useState(false);
   const [panier, setPanier] = useState([]);
   const [total, setTotal] = useState(0);
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
   let { id } = useParams();
   const ls = localStorage;
+  const [recherche, setRecherche] = useState("") 
   const handlePanierChange = (index, event) => {
     const nouveauPanier = [...panier];
     nouveauPanier[index][event.target.name] = event.target.value;
@@ -24,11 +28,78 @@ export default function Quiz() {
     await axios
       .get(`http://localhost:8000/produit`)
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.length);
         setQuiz(res.data);
         setAffichage(true);       
       });
   };
+
+  const OCPP = async () => {
+    await axios
+      .get(`http://localhost:8000/OCPP`)
+      .then((res) => {
+        console.log(res.data.length);
+        setQuiz(res.data);
+        setAffichage(true);       
+      });
+  };
+
+  const ODPP = async () => {
+    await axios
+      .get(`http://localhost:8000/ODPP`)
+      .then((res) => {
+        console.log(res.data.length);
+        setQuiz(res.data);
+        setAffichage(true);       
+      });
+  };
+  const OD = async () => {
+    await axios
+      .get(`http://localhost:8000/OD`)
+      .then((res) => {
+        console.log(res.data.length);
+        setQuiz(res.data);
+        setAffichage(true);       
+      });
+  };
+
+  const OC = async () => {
+    await axios
+      .get(`http://localhost:8000/OC`)
+      .then((res) => {
+        console.log(res.data.length);
+        setQuiz(res.data);
+        setAffichage(true);       
+      });
+  };
+
+  const real2 = async (e) => {
+    e.preventDefault();
+    console.log('real2', recherche)
+    await axios
+      .get(`http://localhost:8000/real2`, {
+        "recherche":recherche
+      })
+      .then((res) => {
+        console.log('data',res.data);
+        setQuiz(res.data);
+        setAffichage(true);       
+      });
+  };
+
+  const real1 = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/real1');
+      const articleCount = response.data.articleCount;
+      console.log(articleCount);
+      setQuiz(articleCount);
+      setAffichage(true);
+    } catch (error) {
+      // Gérer les erreurs de requête
+      console.error(error);
+    }
+  };
+  
 
   useEffect(() => {
     recup();
@@ -83,18 +154,33 @@ const ajouterAuPanier = (produit) => {
       console.log(error);
     }
   };
+
+  
   
 
   return (
     <div className="body">
       <h2>Les produits</h2>
+              {/* <form className='form' onSubmit={real2}>
+              <input type="text" placeholder='Recherche' style={{ marginTop: '200px' }}{...register("recherche", { required: true })} onChange={(e) => setRecherche(e.target.value)} />
+              <input type='submit' value="valider"></input>
+              </form>
+              {quiz.length} */}
 
+              <div className='trie' style={{ marginTop: '150px' }}>
+                <input type='button' value="Prix ↑" onClick={OCPP}></input>
+                <input type='button' value="Prix ↓" onClick={ODPP}></input>
+                <input type='button' value="Produit ↑" onClick={OC}></input>
+                <input type='button' value="Produit ↓" onClick={OD}></input>
+              </div>
       <div className="box">
+        
         {affichage ? (
           quiz.map((produit) => (
-            <div className="cont" style={{ marginTop: '200px' }} key={produit.id}>
+            <div className="cont" style={{ marginTop: '100px' }} key={produit.id}>
+              
               <div className="box-title">
-                {produit.Articles} {produit.Prix}
+                {produit.Articles} {produit.Prix}€
               </div>
               <div className="box-body">
                 <img
@@ -125,6 +211,7 @@ const ajouterAuPanier = (produit) => {
             value={produit.Prix}
             onChange={(event) => handlePanierChange(index, event)}
             placeholder="Prix"
+            readOnly
           />
           <input
             type="text"
@@ -132,6 +219,7 @@ const ajouterAuPanier = (produit) => {
             value={produit.Articles}
             onChange={(event) => handlePanierChange(index, event)}
             placeholder="Articles"
+            readOnly
           />
           
              x{produit.quantite}
