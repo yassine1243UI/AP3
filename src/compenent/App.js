@@ -9,6 +9,10 @@ import Supprimer from './Supprimer';
 import Sup from './Suppression';
 import Modifier from './Modifier';
 import Modification from './Modification'
+import AcceuilAdmin from './AcceuilAdmin'
+import User from './User'
+import UserModif from './UserModif'
+import UserSup from './UserSup'
 import Footer from './Footer';
 import { Route, Routes, Link, useLocation, Navigate } from "react-router-dom";
 import React, { useState } from 'react';
@@ -31,13 +35,16 @@ function App() {
       <Routes>
         <Route path="/inscr" element={<Inscrire />} />
         <Route path="/" element={<Connecter />} />
-        <Route path='/Admin' element={<Admin/>}/>
-        <Route path='/Sup' element={<Supprimer/>}/>
-        <Route path='/Del/:id' element={<Sup/>}/>
-        <Route path='/Modifier' element={<Modifier/>}/>
-        <Route path='/Modification/:id' element={<Modification/>}/>
+        <Route path='/Admin' element={<Security element = {<Admin/>}/>}/>
+        <Route path='/Sup' element={<Security element = {<Supprimer/>}/>}/>
+        <Route path='/Del/:id' element={<Security element = {<Sup/>}/>}/>
+        <Route path='/Modifier' element={<Security element = {<Modifier/>}/>}/>
+        <Route path='/Modification/:id' element={<Security element = {<Modification/>}/>}/>
+        <Route path='/AcceuilAdmin' element={<Security element = {<AcceuilAdmin/>}/>}/>
         <Route path='/produits' element={<Security element = {<Produits/>}/>}/>
-
+        <Route path='/User' element={<Security element = {<User/>}/>}/>
+        <Route path='/UserModif/:id' element={<Security element = {<UserModif/>}/>}/>
+        <Route path='/UserSup/:id' element={<Security element = {<UserSup/>}/>}/>
 
       </Routes>
 
