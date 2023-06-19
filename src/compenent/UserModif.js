@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export default function ModifierArticles() {
-  const { handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -48,10 +48,7 @@ export default function ModifierArticles() {
         <label>Identifiant</label>
         <input defaultValue={mail} onChange={(e) => setMail(e.target.value)} />
         <label>Role</label>
-        <select value={role} onChange={(e) => setRole(e.target.value)}>
-          <option value="0">Utilisateur</option>
-          <option value="1">Admin</option>
-        </select>
+        <input {...register("role", { required: true })} onChange={(e) => setRole(e.target.value)} />
         {errors.Mail || errors.Role ? <span>Tous les champs doivent être remplis</span> : ''}
         <p>
         <input type="submit" />

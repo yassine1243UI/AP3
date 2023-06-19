@@ -75,19 +75,21 @@ export default function ModifierArticles() {
     return (
         <div className='container'>
 
-              <h2> Modifier votre article</h2>    
+              <h2> Modifier votre article</h2>  
 
               <form onSubmit={handleSubmit(editUser)}>        
                 <label>Articles </label>        
-                <input defaultValue={Articles} onChange={(e) => setArticles(e.target.value)} />           
+                <input value={editUser.Articles} defaultValue={Articles} onChange={(e) => setArticles(e.target.value)} />           
                 <label>Image </label>
-                        <input defaultValue={Image} onChange={(e) => setImage(e.target.value)} /> 
+                        <input value={editUser.Image} defaultValue={Image} onChange={(e) => setImage(e.target.value)} /> 
                 <label>Prix </label>        
-                <input defaultValue={Prix} onChange={(e) => setPrix(e.target.value)} />
+                <input value={editUser.Prix} defaultValue={Prix} onChange={(e) => setPrix(e.target.value)} />
                         <label>Quantité </label>        
-                <input defaultValue={Quantite} onChange={(e) => setQuantite(e.target.value)} />             
+                <input value={editUser.Quantite} defaultValue={Quantite} onChange={(e) => setQuantite(e.target.value)} />   
+
                 {(errors.Articles || errors.Image || errors.Prix || errors.Quantite) ? <span>Tous les champs doivent être remplis</span> : ""}        
                 <input type="submit" />
+                <Link to='/Modifier'><input type="button" value="Annuler"/></Link>
         
               </form>
         
