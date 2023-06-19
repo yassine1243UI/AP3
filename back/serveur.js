@@ -174,25 +174,7 @@ app.post('/connexion', async (req, res) => {
   }
 });
 
-app.post('/Ajt', async(req,res) => {       
-  let conn; 
-  try{
-      console.log("lancement de la connexion")
-      conn = await pool.getConnection();
-      console.log("lancement de la requete")
-      // Insérer un nouveau produit dans la base de données
-      const rows = await conn.query ('INSERT INTO produit (Articles, Image, Prix, Quantite) VALUES (?, ?, ?, ?)', 
-      [req.body.Articles, req.body.Image, req.body.Prix, req.body.Quantite]);
-      const rows2 = await conn.query ('INSERT INTO vendu (Prix, Articles) VALUES (?, ?)', 
-      [req.body.Prix,req.body.Articles]);
-      console.log(rows);
-      res.status(200).json(rows.affectedRows)
-      res.status(200).json(rows2.affectedRows)
-  }
-  catch(err){
-      console.log(err)
-  }
-})
+
 
 app.delete('/Del/:id', async(req,res) => {  
 const id = parseInt(req.params.id)     
@@ -403,7 +385,37 @@ app.put('/modification/:id', async (req, res) => {
     })
     
   
+    app.post('/Commentaire', async(req,res) => {       
+      let conn; 
+      try{
+          console.log("lancement de la connexion")
+          conn = await pool.getConnection();
+          console.log("lancement de la requete")
+          // Insérer un nouveau produit dans la base de données
+          const rows = await conn.query ('INSERT INTO commentaire (Nom, Commentaire) VALUES (?, ?)', 
+          [req.body.Nom, req.body.Commentaire]);
+          console.log(rows);
+          res.status(200).json(rows.affectedRows)
+      }
+      catch(err){
+          console.log(err)
+      }
+    })
 
+    app.get('/AffichCommentaire', async(req,res) => { 
+      let conn; 
+      try{
+          console.log("lancement de la connexion") 
+          conn = await pool.getConnection(); 
+          console.log("lancement de la requete") 
+          const rows = await conn.query('SELECT * FROM commentaire'); 
+          console.log(rows); // affichage des données récupérées dans la console
+          res.status(200).json(rows) // envoi des données récupérées au client sous forme de JSON
+      }
+      catch(err){
+          console.log(err)
+      }
+  })
 
   
 

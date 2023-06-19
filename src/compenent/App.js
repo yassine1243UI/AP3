@@ -13,6 +13,8 @@ import AcceuilAdmin from './AcceuilAdmin'
 import User from './User'
 import UserModif from './UserModif'
 import UserSup from './UserSup'
+import Commentaire from './Commentaire'
+import AfficherCommentaire from './CommentaireAfficher'
 import Footer from './Footer';
 import { Route, Routes, Link, useLocation, Navigate } from "react-router-dom";
 import React, { useState } from 'react';
@@ -45,6 +47,8 @@ function App() {
         <Route path='/User' element={<Security element = {<User/>}/>}/>
         <Route path='/UserModif/:id' element={<Security element = {<UserModif/>}/>}/>
         <Route path='/UserSup/:id' element={<Security element = {<UserSup/>}/>}/>
+        <Route path='/Commentaire' element={<Security element = {<Commentaire/>}/>}/>
+        <Route path='/AfficherCommentaire' element={<Security element = {<AfficherCommentaire/>}/>}/>
 
       </Routes>
 
