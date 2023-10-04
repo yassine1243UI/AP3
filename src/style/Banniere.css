@@ -1,4 +1,17 @@
+@font-face {
+  font-family: 'MYTfont-IconLibrary'; /* Nom de la police personnalisée */
+  src: url('../../fontawesome/fontawesome-free-6.4.2-web/svgs/regular/user.svg') format('truetype'); /* Chemin vers le fichier de police */
+  /* Autres propriétés de la police (par exemple, font-weight, font-style) */
+}
+
+@font-face {
+  font-family:"futura-pt";
+  src:url("https://use.typekit.net/af/cf3e4e/000000000000000000010095/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2"),url("https://use.typekit.net/af/cf3e4e/000000000000000000010095/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff"),url("https://use.typekit.net/af/cf3e4e/000000000000000000010095/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("opentype");
+  font-display:auto;font-style:italic;font-weight:400;font-stretch:normal;
+  }
+
 .header {margin: 0;}
+
 .navbar-header .li{
     display: inline;
     text-align: center;
@@ -23,8 +36,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    border-bottom: black solid 1px;
-    background-color: rgb( 254, 200, 22)  ;
+    background-color: rgb(255, 255, 255)  ;
     /* background: linear-gradient( rgb( 254, 200, 22) , rgb(179, 2, 40) ); */
   }
 
@@ -33,25 +45,97 @@
     
   }
   
-  .navbar a {
+  .navbar .Menu a {
     float: left;
     display: block;
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 10px;
+    font-weight: 300;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 14px;
+    color: rgb(6, 3, 3);
+    transition: 0.2s;
+    font-family: 'futura-pt', sans-serif;
+    margin: 3px;
+  }
+  
+
+  .navbar .Menu a:hover {
+    background: black;
     color: white;
   }
 
-  .navbar a:hover {
-    background: white;
-    color: black;
-    border-radius: 30px;
-    transition: 1s;
+  .Icon img:hover{
+    border-bottom: black solid 1px ;
   }
 
-  .formulaire{
-    right: 50%;
-    position: absolute;
-    padding-top: 32px;
+
+  .Icon{
+    margin-left: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
+
+  .Icon img{
+    height: 20px;
+    padding: 5px;
+  }
+
+
+  @keyframes anime {
+    from{
+        transform: translateX(-180px);
+    }
+}
+
+  .Logo{
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+    font-family: futura-pt, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    margin-right: 205px;
+  }
+
+  @media (max-width: 1186px) {
+    .Menu{
+      display: none;
+      width: 50%;
+      margin-left: -623px;
+      margin-top: 101px;
+    }
+
+    .navbar{
+      width: 100%;
+      padding: 0;
+    }
+
+    .MenuL img{
+      cursor: pointer;
+    }
+
+    .Logo{
+      margin-left: 30%;
+      height: 80px;
+    }
+  }
+
+  @media (min-width : 1186px){
+    .MenuL{
+      display: none;
+    }
+
+    #Menu{
+      display: block;
+    }
+  }
+  
+  
+  
+
+  
