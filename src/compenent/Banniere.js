@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../style/Banniere.css';
-import MenuLateral from '../asset/Hamburger_icon.png';
-import AccountIcon from '../asset/Avatar.png';
+import MenuLateral from '../asset/Hamburger.png';
+import AccountIcon from '../asset/User.png';
 import Cart from '../asset/Cart.png';
-import heart from '../asset/heart.png';
-import search from '../asset/search.png';
+import heart from '../asset/Heart.png';
+import search from '../asset/Search.png';
 
 export default function Banniere({ shouldDisplayBanner, toggleBanner }) {
   const [menuOpen, setMenuOpen] = useState(false);

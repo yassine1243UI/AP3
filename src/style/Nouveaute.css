@@ -1,0 +1,85 @@
+@font-face {
+    font-family:"futura-pt";
+    src:url("https://use.typekit.net/af/9b05f3/000000000000000000013365/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/9b05f3/000000000000000000013365/27/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/9b05f3/000000000000000000013365/27/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+    font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+    }
+    
+.BackgroudImg img{
+    width: 100%;
+    margin-top: 5%;
+}
+
+.contenue-sur-photo{
+    font-family: futura-pt, sans-serif;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 60%;
+    left: 35%;
+    color: aliceblue;
+    font-size: 50px;
+    font-weight: bold;
+    align-items: center;
+}
+
+.paragraphe-plus-grand{
+    font-size: 63px;
+}
+
+.contenue-sur-photo p{
+    margin: 0;
+}
+
+.bouton{
+    margin-top: 10%;
+    font-size: 13px;
+    font-weight:lighter;
+    background-color: white;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 220px;
+}
+
+@media (max-width: 1186px) {
+    .contenue-sur-photo {
+      position: relative;
+      color: black;
+      left: 15%;
+      margin-right: 30px;
+      transition: color 2s, left 3s, top 3s; /* Ajoutez la transition ici */
+    }
+  
+    .BackgroudImg img {
+      margin-top: 150px;
+      transition: margin-top 1s; /* Ajoutez la transition ici */
+    }
+  
+    .bouton {
+      background-color: black;
+      color: white;
+      margin-bottom: 10px;
+      transition: background-color 1s, color 1s; /* Ajoutez la transition ici */
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .contenue-sur-photo {
+     left: 0;
+     font-size: 30px;
+     transition: font-size 3s, left 3s;
+     margin-bottom: 50px;
+    }
+    
+    .paragraphe-plus-grand{
+        font-size: 38px;
+        transition: font-size 3s;
+    }
+
+    .BackgroudImg img{
+        margin-top: 200px;
+    }
+   
+  }
